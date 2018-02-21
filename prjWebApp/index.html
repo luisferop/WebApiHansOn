@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <input type="text" id="searchID" />
+    <button onclick="searchContact()">Search</button>
+    <button onclick="addContact()">Add</button>
+    <button onclick="editContact()">Edit</button>
+    <button onclick="removeContact()">Remove</button>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON("api/Contact", function (result) {
+                console.info(result);
+            });
+        });
+        function searchContact() {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "api/Contact/" + $("#searchID").val(),
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+        function addContact() {
+
+            var obj = {
+                "Id": 0,
+                "FirstName": "Diana",
+                "LastName": "Prince"
+            }
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "api/Contact",
+                data: obj,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+        function editContact() {
+
+            var obj = {
+                "FirstName": "Peter",
+                "LastName": "Parker"
+            }
+            $.ajax({
+                type: "PUT",
+                dataType: "json",
+                url: "api/Contact/" + $("#searchID").val(),
+                data: obj,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+        function removeContact() {
+            $.ajax({
+                type: "DELETE",
+                dataType: "json",
+                url: "api/Contact/" + $("#searchID").val(),
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
